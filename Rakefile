@@ -16,7 +16,7 @@ AUTHOR            = "niku"
 EMAIL             = "niku@niku.name"
 DESCRIPTION       = "yma4r is Yahoo Morphological Analyzer wrapper For Ruby"
 RUBYFORGE_PROJECT = "yma4r"
-HOMEPATH          = "http://#{RUBYFORGE_PROJECT}.rubyforge.org"
+HOMEPATH          = "http://github.com/#{AUTHOR}/#{RUBYFORGE_PROJECT}"
 BIN_FILES         = %w(  )
 
 VERS              = Yma4r::VERSION
