@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 require 'rubygems'
 require 'classx'
+
 class Yma4r
   include ClassX
-  extend ClassX::Commandable
+  require 'yma_parser'
   require 'net/http'
 
   has :appid,
