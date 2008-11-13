@@ -4,7 +4,6 @@ require 'classx'
 class Yma4r
   include ClassX
   extend ClassX::Commandable
-  require 'rexml/document'
   require 'net/http'
 
   has :appid,
@@ -59,7 +58,7 @@ class Yma4r
   :optional => true
 
   def analyse
-    REXML::Document.new(request)
+    YmaParser.new(request)
   end
 
   def request
