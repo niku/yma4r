@@ -60,7 +60,7 @@ class Yma4r
   def analyse
     YmaParser.new(request)
   end
-
+  
   def request
     host = 'jlp.yahooapis.jp'
     path = '/MAService/V1/parse'
