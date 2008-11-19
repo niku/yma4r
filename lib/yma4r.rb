@@ -4,9 +4,9 @@ require 'classx'
 
 class Yma4r
   include ClassX
-  require 'yma_parser'
   require 'net/http'
-
+  require 'yma_parser'
+  
   has :appid,
   :desc => 'アプリケーションID。'
   
