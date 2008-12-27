@@ -22,7 +22,7 @@ class Yma4r
   :desc => '解析結果の種類をコンマで区切って指定します。',
   :kind_of => Symbol,
   :coerce => { String => proc {|val| val.to_sym } },
-  :validate => proc { |val| (val.to_sym == :uniq) || (val.to_sym == :ma) },
+  :validate => proc { |val| (val == :uniq) || (val == :ma) },
   :optional => true
 
   has :response,
@@ -99,15 +99,8 @@ class Yma4r
   :validate => proc{ |val| (val.is_a? TrueClass) || (val.is_a? FalseClass) },
   :optional => true
 
-  def analyse
-    YmaParser.new(request)
-  end
-
-  def request
-    host = 'jlp.yahooapis.jp'
-    path = '/MAService/V1/parse'
-    Net::HTTP.start(host){ |http| http.post(path, query_string) }.body
-  end
+  YMA_HOST = 'jlp.yahooapis.jp'
+  YMA_PATH = '/MAService/V1/parse'
 
   def query_hash
     keys = ['appid', 'sentence', 'results', 'response', 'filter', 'ma_response', 'ma_filter', 'uniq_response', 'uniq_filter', 'uniq_by_baseform']
@@ -120,5 +113,5 @@ class Yma4r
     query_hash.map{ |key,val| "#{URI.encode(key)}=#{URI.encode(val)}" if val }.compact.join('&')
   end
 
-  private :request, :query_hash, :query_string
+  private :query_hash
 end
