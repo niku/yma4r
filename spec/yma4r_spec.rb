@@ -239,74 +239,74 @@ describe Yma4r, "の uniq_by_baseform を設定する場合:" do
   end
 end
 
-describe Yma4r, "の query_string を実行したとき" do
+describe Yma4r, "の query を実行したとき" do
   before do
     @yma4r = Yma4r.new(:appid => 'appid')
   end
 
   it "sentence が設定されていない場合 ClassX::AttrRequiredError になること" do
-    lambda{ @yma4r.query_string }.should raise_error(ClassX::AttrRequiredError)
+    lambda{ @yma4r.query }.should raise_error(ClassX::AttrRequiredError)
   end
 
   it "sentence に設定された内容がURI.encodeされて出力されること" do
     @yma4r.sentence = target = 'すもももももももものうち'
-    alist = @yma4r.query_string.split('&').map{ |val| val.split('=') }
+    alist = @yma4r.query.split('&').map{ |val| val.split('=') }
     Hash[*alist.flatten]['sentence'].should == URI.encode(target)
   end
 
   it "results に設定された内容が出力されること" do
     @yma4r.results = target = :ma
     @yma4r.sentence = 'ほげふが'
-    alist = @yma4r.query_string.split('&').map{ |val| val.split('=') }
+    alist = @yma4r.query.split('&').map{ |val| val.split('=') }
     Hash[*alist.flatten]['results'].should == URI.encode(target.to_s)
   end
 
   it "response に設定された内容が出力されること" do
     @yma4r.response = target = [:reading, :pos]
     @yma4r.sentence = 'ほげふが'
-    alist = @yma4r.query_string.split('&').map{ |val| val.split('=') }
+    alist = @yma4r.query.split('&').map{ |val| val.split('=') }
     Hash[*alist.flatten]['response'].should == URI.encode(target.join(','))
   end
 
   it "filter に設定された内容が出力されること" do
     @yma4r.filter = target = [1,2,3]
     @yma4r.sentence = 'ほげふが'
-    alist = @yma4r.query_string.split('&').map{ |val| val.split('=') }
+    alist = @yma4r.query.split('&').map{ |val| val.split('=') }
     Hash[*alist.flatten]['filter'].should == URI.encode(target.join('|'))
   end
 
   it "ma_response に設定された内容が出力されること" do
     @yma4r.ma_response = target = [:reading, :pos]
     @yma4r.sentence = 'ほげふが'
-    alist = @yma4r.query_string.split('&').map{ |val| val.split('=') }
+    alist = @yma4r.query.split('&').map{ |val| val.split('=') }
     Hash[*alist.flatten]['ma_response'].should == URI.encode(target.join(','))
   end
 
   it "ma_filter に設定された内容が出力されること" do
     @yma4r.ma_filter = target = [1,2,3]
     @yma4r.sentence = 'ほげふが'
-    alist = @yma4r.query_string.split('&').map{ |val| val.split('=') }
+    alist = @yma4r.query.split('&').map{ |val| val.split('=') }
     Hash[*alist.flatten]['ma_filter'].should == URI.encode(target.join('|'))
   end
 
     it "uniq_response に設定された内容が出力されること" do
     @yma4r.uniq_response = target = [:reading, :pos]
     @yma4r.sentence = 'ほげふが'
-    alist = @yma4r.query_string.split('&').map{ |val| val.split('=') }
+    alist = @yma4r.query.split('&').map{ |val| val.split('=') }
     Hash[*alist.flatten]['uniq_response'].should == URI.encode(target.join(','))
   end
 
   it "uniq_filter に設定された内容が出力されること" do
     @yma4r.uniq_filter = target = [1,2,3]
     @yma4r.sentence = 'ほげふが'
-    alist = @yma4r.query_string.split('&').map{ |val| val.split('=') }
+    alist = @yma4r.query.split('&').map{ |val| val.split('=') }
     Hash[*alist.flatten]['uniq_filter'].should == URI.encode(target.join('|'))
   end
 
   it "uniq_by_baseform に設定された内容が出力されること" do
     @yma4r.uniq_by_baseform = target = true
     @yma4r.sentence = 'ほげふが'
-    alist = @yma4r.query_string.split('&').map{ |val| val.split('=') }
+    alist = @yma4r.query.split('&').map{ |val| val.split('=') }
     Hash[*alist.flatten]['uniq_by_baseform'].should == URI.encode(target.to_s)
   end
 
@@ -321,17 +321,17 @@ describe Yma4r, "の query_string を実行したとき" do
     @yma4r.uniq_filter = uniq_filter = '5|6|7'
     @yma4r.uniq_by_baseform = uniq_by_baseform = true
 
-    alist = @yma4r.query_string.split('&').map{ |val| val.split('=') }
-    query_hash = Hash[*alist.flatten]
+    alist = @yma4r.query.split('&').map{ |val| val.split('=') }
+    hash = Hash[*alist.flatten]
 
-    query_hash['sentence'].should == URI.encode(sentence)
-    query_hash['results'].should == URI.encode(results.to_s)
-    query_hash['response'].should == URI.encode(response.join(','))
-    query_hash['filter'].should == URI.encode(filter.join('|'))
-    query_hash['ma_response'].should == URI.encode(ma_response.to_s)
-    query_hash['ma_filter'].should == URI.encode(ma_filter.to_s)
-    query_hash['uniq_response'].should == URI.encode(uniq_response.to_s)
-    query_hash['uniq_filter'].should == URI.encode(uniq_filter)
-    query_hash['uniq_by_baseform'].should == URI.encode(uniq_by_baseform.to_s)
+    hash['sentence'].should == URI.encode(sentence)
+    hash['results'].should == URI.encode(results.to_s)
+    hash['response'].should == URI.encode(response.join(','))
+    hash['filter'].should == URI.encode(filter.join('|'))
+    hash['ma_response'].should == URI.encode(ma_response.to_s)
+    hash['ma_filter'].should == URI.encode(ma_filter.to_s)
+    hash['uniq_response'].should == URI.encode(uniq_response.to_s)
+    hash['uniq_filter'].should == URI.encode(uniq_filter)
+    hash['uniq_by_baseform'].should == URI.encode(uniq_by_baseform.to_s)
   end
 end

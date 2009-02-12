@@ -101,8 +101,8 @@ class Yma4r
   YMA_HOST = 'jlp.yahooapis.jp'
   YMA_PATH = '/MAService/V1/parse'
 
-  def query_string
-    query_hash.map { |key,val|
+  def query
+    hash.map { |key,val|
       unless (val == nil || val == '')
         "#{URI.encode(key)}=#{URI.encode(val)}"
       end
@@ -110,7 +110,7 @@ class Yma4r
   end
 
   private
-  def query_hash
+  def hash
     if sentence == nil
       raise ClassX::AttrRequiredError
     end
