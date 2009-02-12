@@ -98,9 +98,6 @@ class Yma4r
   :validate => proc{ |val| (val.is_a? TrueClass) || (val.is_a? FalseClass) },
   :optional => true
 
-  YMA_HOST = 'jlp.yahooapis.jp'
-  YMA_PATH = '/MAService/V1/parse'
-
   def query
     hash.map { |key,val|
       unless (val == nil || val == '')
@@ -109,7 +106,17 @@ class Yma4r
     }.compact.join('&')
   end
 
+  def parse
+    YmaParser.new(post)
+  end
+
   private
+  def post
+    host = 'jlp.yahooapis.jp'
+    path = '/MAService/V1/parse'
+    Net::HTTP.start(host){|http| http.post(path, query)}.body
+  end
+
   def hash
     if sentence == nil
       raise ClassX::AttrRequiredError

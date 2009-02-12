@@ -334,4 +334,16 @@ describe Yma4r, "の query を実行したとき" do
     hash['uniq_filter'].should == URI.encode(uniq_filter)
     hash['uniq_by_baseform'].should == URI.encode(uniq_by_baseform.to_s)
   end
+
+  describe Yma4r, "の post を実行したとき" do
+    before do
+      pending 'rspecのモックとスタブの書き方を調べる'
+      @yma4r = Yma4r.new(:appid => 'appid',
+                         :sentence => 'すもももももももものうち')
+    end
+
+    it "YmaParser が返ること"
+    it "アクセスできなかった時例外が返ること"
+    it "パースできなかった時例外が返ること"
+  end
 end
