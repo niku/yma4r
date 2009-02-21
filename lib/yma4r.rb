@@ -19,9 +19,12 @@ class Yma4r
 
   has :results,
   :desc => '解析結果の種類をコンマで区切って指定します。',
-  :kind_of => Symbol,
-  :coerce => { String => proc {|val| val.to_sym } },
-  :validate => proc { |val| (val == :uniq) || (val == :ma) },
+  :kind_of => Array,
+  :coerce => {
+    String => proc {|val| [val.to_sym] },
+    Symbol => proc {|val| [val]}
+  },
+  :validate_each => proc { |val| (val == :uniq) || (val == :ma) },
   :optional => true
 
   has :response,
@@ -107,7 +110,7 @@ class Yma4r
   end
 
   def parse
-    YmaParser.new(post)
+    YmaParser::ResultSet.new(post)
   end
 
   private
@@ -125,7 +128,7 @@ class Yma4r
     keys = ['appid', 'sentence', 'results', 'response', 'filter', 'ma_response', 'ma_filter', 'uniq_response', 'uniq_filter', 'uniq_by_baseform']
     vals = [appid,
             sentence,
-            results_for_query,
+            (response_for_query results),
             (response_for_query response),
             (filter_for_query filter),
             (response_for_query ma_response),
@@ -137,8 +140,8 @@ class Yma4r
     Hash[*alist.flatten]
   end
 
-  def results_for_query
-    results.to_s
+  def results_for_query val
+    val == nil ? nil : val.join(',')
   end
 
   def response_for_query val

@@ -38,17 +38,27 @@ describe Yma4r, "の results を設定する場合:" do
 
   it ":ma で 渡すと results に設定されること" do
     @yma4r.results = target = :ma
-    @yma4r.results.should == target
+    @yma4r.results.should == [target]
   end
 
   it ":uniq で渡すと results に設定されること" do
     @yma4r.results = target = :uniq
+    @yma4r.results.should == [target]
+  end
+
+  it "[:ma] で 渡すと results に設定されること" do
+    @yma4r.results = target = [:ma]
+    @yma4r.results.should == target
+  end
+
+  it "[:ma, :uniq] で 渡すと results に設定されること" do
+    @yma4r.results = target = [:ma, :uniq]
     @yma4r.results.should == target
   end
 
   it "String で渡すと Symbol になること" do
     @yma4r.results = target = 'ma'
-    @yma4r.results.should == target.to_sym
+    @yma4r.results.should == [target.to_sym]
   end
 
   it ":ma, :uniq 以外なら ClassX::InvalidAttrArgument になること" do
@@ -289,7 +299,7 @@ describe Yma4r, "の query を実行したとき" do
     Hash[*alist.flatten]['ma_filter'].should == URI.encode(target.join('|'))
   end
 
-    it "uniq_response に設定された内容が出力されること" do
+  it "uniq_response に設定された内容が出力されること" do
     @yma4r.uniq_response = target = [:reading, :pos]
     @yma4r.sentence = 'ほげふが'
     alist = @yma4r.query.split('&').map{ |val| val.split('=') }
