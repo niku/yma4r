@@ -1,4 +1,3 @@
-
 = yma4r
 
 
@@ -21,22 +20,25 @@
 
 == Synopsis
 
-   require 'pp'
-   require 'yma4r'
+require 'yma4r'
+yma4r = Yma4r.new(
+                  :appid => 'Your Yahoo Japan Application ID',
+                  :sentence => 'すもももももももものうち',
+                  :results => :ma,
+                  :response => [:surface, :reading, :pos, :baseform]
+                  )
 
-   ma = Yma4r.new(:appid => 'Your Yahoo Japan Application ID',
-                  :sentence => 'すもももももももものうち')
+yma4r.parse.ma_result.word_list.each do |e|
+  puts "surface:#{e.surface}, reading:#{e.reading}, pos:#{e.pos}, baseform:#{e.baseform}"
+end
 
-   result = ma.analyse
-   pp result.word_list
-   #[{:pos=>"名詞", :surface=>"すもも", :reading=>"すもも"},
-   # {:pos=>"助詞", :surface=>"も", :reading=>"も"},
-   # {:pos=>"名詞", :surface=>"もも", :reading=>"もも"},
-   # {:pos=>"助詞", :surface=>"も", :reading=>"も"},
-   # {:pos=>"名詞", :surface=>"もも", :reading=>"もも"},
-   # {:pos=>"助詞", :surface=>"の", :reading=>"の"},
-   # {:pos=>"名詞", :surface=>"うち", :reading=>"うち"}]
-   #=> nil
+# >> surface:すもも, reading:すもも, pos:名詞, baseform:すもも
+# >> surface:も, reading:も, pos:助詞, baseform:も
+# >> surface:もも, reading:もも, pos:名詞, baseform:もも
+# >> surface:も, reading:も, pos:助詞, baseform:も
+# >> surface:もも, reading:もも, pos:名詞, baseform:もも
+# >> surface:の, reading:の, pos:助詞, baseform:の
+# >> surface:うち, reading:うち, pos:名詞, baseform:うち
 
 == SEE ALSO
 
