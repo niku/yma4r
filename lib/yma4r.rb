@@ -119,9 +119,7 @@ class Yma4r
   end
 
   def hash
-    if sentence == nil
-      raise ClassX::AttrRequiredError
-    end
+    raise ClassX::AttrRequiredError if sentence.nil?
 
     keys = attribute_of.keys
     vals = keys.map do |key|
