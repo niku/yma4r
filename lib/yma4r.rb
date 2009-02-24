@@ -123,34 +123,20 @@ class Yma4r
       raise ClassX::AttrRequiredError
     end
 
-    keys = ['appid', 'sentence', 'results', 'response', 'filter', 'ma_response', 'ma_filter', 'uniq_response', 'uniq_filter', 'uniq_by_baseform']
-    vals = [appid,
-            sentence,
-            (response_for_query results),
-            (response_for_query response),
-            (filter_for_query filter),
-            (response_for_query ma_response),
-            (filter_for_query ma_filter),
-            (response_for_query uniq_response),
-            (filter_for_query uniq_filter),
-            (uniq_by_baseform_for_query)]
+    keys = attribute_of.keys
+    vals = keys.map do |key|
+      case key
+      when /filter/
+        (val = __send__ key).nil? ? nil : val.join('|')
+      when /results|response/
+        (val = __send__ key).nil? ? nil : val.join(',')
+      when /uniq_by_baseform/
+        (val = __send__ key).nil? ? nil : val.to_s
+      else
+        __send__ key
+      end
+    end
     alist = keys.zip(vals)
     Hash[*alist.flatten]
-  end
-
-  def results_for_query val
-    val == nil ? nil : val.join(',')
-  end
-
-  def response_for_query val
-    val == nil ? nil : val.join(',')
-  end
-
-  def filter_for_query val
-    val == nil ? nil : val.join('|')
-  end
-
-  def uniq_by_baseform_for_query
-    uniq_by_baseform == nil ? nil : uniq_by_baseform.to_s
   end
 end
