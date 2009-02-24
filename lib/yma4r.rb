@@ -104,11 +104,9 @@ class Yma4r
   :optional => true
 
   def query
-    hash.map { |key,val|
-      unless (val == nil || val == '')
-        "#{URI.encode(key)}=#{URI.encode(val)}"
-      end
-    }.compact.join('&')
+    hash.reject{|key,val| val.nil? || val.empty? }.map{|key,val|
+      "#{URI.encode(key)}=#{URI.encode(val)}"
+    }.join('&')
   end
 
   def parse
