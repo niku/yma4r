@@ -7,6 +7,8 @@ class Yma4r
   require 'net/http'
   require 'yma_parser'
 
+  API_URL = URI.parse('http://jlp.yahooapis.jp/MAService/V1/parse')
+
   has :appid,
   :desc => 'アプリケーションID。',
   :kind_of => String,
@@ -115,9 +117,7 @@ class Yma4r
 
   private
   def post
-    host = 'jlp.yahooapis.jp'
-    path = '/MAService/V1/parse'
-    Net::HTTP.start(host){|http| http.post(path, query)}.body
+    Net::HTTP.start(API_URL.host){|http| http.post(API_URL.path, query)}.body
   end
 
   def hash
