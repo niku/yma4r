@@ -26,14 +26,14 @@ class Yma4r
     String => proc {|val| [val.to_sym] },
     Symbol => proc {|val| [val]}
   },
-  :validate_each => proc {|item| /uniq|ma/ =~ item.to_s},
+  :validate_each => proc {|item| [:uniq,:ma].include?(item)},
   :optional => true
 
   has :response,
   :desc => 'ma_response, uniq_response のデフォルト設定です。word に返される形態素情報をコンマで区切って指定します。無指定の場合は "surface,reading,pos" になります。',
   :kind_of => Array,
   :coerce => { Symbol => proc {|val| [val]} },
-  :validate_each => proc{|item| /surface|reading|pos|baseform|feature/ =~ item.to_s},
+  :validate_each => proc{|item| [:surface,:reading,:pos,:baseform,:feature].include?(item)},
   :optional => true
 
   has :filter,
@@ -50,7 +50,7 @@ class Yma4r
   :desc => 'ma_result 内の word に返される形態素情報をコンマで区切って指定します。無指定の場合 response の指定が用いられます。',
   :kind_of => Array,
   :coerce => { Symbol => proc {|val| [val]} },
-  :validate_each => proc{|item| /surface|reading|pos|baseform|feature/ =~ item.to_s},
+  :validate_each => proc{|item| [:surface,:reading,:pos,:baseform,:feature].include?(item)},
   :optional => true
 
   has :ma_filter,
@@ -67,7 +67,7 @@ class Yma4r
   :desc => 'uniq_result 内の word に返される形態素情報をコンマで区切って指定します。無指定の場合 response の指定が用いられます。',
   :kind_of => Array,
   :coerce => { Symbol => proc {|val| [val]} },
-  :validate_each => proc{|item| /surface|reading|pos|baseform|feature/ =~ item.to_s},
+  :validate_each => proc{|item| [:surface,:reading,:pos,:baseform,:feature].include?(item)},
   :optional => true
 
   has :uniq_filter,
