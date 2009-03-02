@@ -105,15 +105,18 @@ class Yma4r
 
     keys = attribute_of.keys
     vals = keys.map do |key|
-      case key
-      when /filter/
-        (val = __send__ key).nil? ? nil : val.join('|')
-      when /results|response/
-        (val = __send__ key).nil? ? nil : val.join(',')
-      when /uniq_by_baseform/
-        (val = __send__ key).nil? ? nil : val.to_s
-      else
-        __send__ key
+      val = __send__ key
+      unless val.nil?
+        case key
+        when /filter/
+          val.join('|')
+        when /results|response/
+          val.join(',')
+        when /uniq_by_baseform/
+          val.to_s
+        else
+          val
+        end
       end
     end
     alist = keys.zip(vals)
