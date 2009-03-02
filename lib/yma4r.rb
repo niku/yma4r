@@ -43,7 +43,7 @@ class Yma4r
     Fixnum => proc {|val| [val]},
     String => proc {|val| val.split('|').uniq.map{|v| v.to_i}}
   },
-  :validate_each => proc {|item| item.between?(1,13)},
+  :validate_each => proc {|item| (1..13).include?(item)},
   :optional => true
 
   has :ma_response,
@@ -60,7 +60,7 @@ class Yma4r
     Fixnum => proc {|val| [val]},
     String => proc {|val| val.split('|').uniq.map{|v| v.to_i}}
   },
-  :validate_each => proc {|item| item.between?(1,13)},
+  :validate_each => proc {|item| (1..13).include?(item)},
   :optional => true
 
   has :uniq_response,
@@ -77,7 +77,7 @@ class Yma4r
     Fixnum => proc {|val| [val]},
     String => proc {|val| val.split('|').uniq.map{|v| v.to_i}}
   },
-  :validate_each => proc {|item| item.between?(1,13)},
+  :validate_each => proc {|item| (1..13).include?(item)},
   :optional => true
 
   has :uniq_by_baseform,
